@@ -1,17 +1,12 @@
-
 const hre = require("hardhat");
 
 async function main() {
+  const Tracking = await hre.ethers.getContractFactory("Tracking");
+  const tracking = await Tracking.deploy();
 
-  const lock = await hre.ethers.deployContract("Lock", [unlockTime], {
-    value: lockedAmount,
-  });
+  await tracking.waitForDeployment();
 
-  await lock.waitForDeployment();
-
-  console.log(
-    `Shipment contract deployed to ${lock.target}`
-  );
+  console.log(`Shipment contract deployed to ${await tracking.getAddress()}`);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
