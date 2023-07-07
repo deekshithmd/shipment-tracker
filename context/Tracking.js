@@ -99,14 +99,111 @@ const TrackingContextProvider = ({ children }) => {
         }
       );
       transaction.wait();
-      console.log(transaction)
+      console.log(transaction);
     } catch (e) {
       console.log(e);
     }
   };
 
+  const getShipment = async (index) => {
+    try {
+      if (!window.ethereum) return "install metamask";
+
+      const accounts = await window.ethereum.request({
+        method: "eth_accounts",
+      });
+
+      const provider = new ethers.JsonRpcProvider();
+      const contract = fetchContract(provider);
+      const shipment = await contract.getShipment(accounts[0], index * 1);
+
+      const SingleShipment = {
+        sender: shipment[0],
+        receiver: shipment[1],
+        pickupTime: shipment[2].toNumber(),
+        deliveryTime: shipment[3].toNumber(),
+        distance: shipment[4].toNumber(),
+        price: ethers.formatEther(shipment[5], toString()),
+        status: shipment[6],
+        isPaid: shipment[7],
+      };
+      return SingleShipment;
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const startShipment = async (getProduct) => {
+    const { receiver, index } = getProduct;
+    try {
+      if (!window.ethereum) return "install metamask";
+
+      const accounts = await window.ethereum.request({
+        method: "eth_accounts",
+      });
+
+      const web3Modal = new Web3Modal();
+      const connection = await web3Modal.connect();
+      const provider = new ethers.BrowserProvider(connection);
+      const signer = provider.getSigner();
+      const contract = fetchContract(signer);
+      const shipment = await contract.startShipment(
+        accounts[0],
+        receiver,
+        index * 1
+      );
+      await shipment.wait();
+    } catch (e) {
+      console.log("sory no shipment", e);
+    }
+  };
+
+  const checkIfWalletConnected = async () => {
+    try {
+      if (!window.ethereum) return "install metamask";
+      const accounts = await window.ethereum.request({
+        method: "eth_accounts",
+      });
+      if (accounts.length) {
+        setCurrentUser(accounts[0]);
+      } else {
+        return "No account";
+      }
+    } catch (e) {
+      console.log("not connected");
+    }
+  };
+
+  const connectWallet = async () => {
+    try {
+      if (!window.ethereum) return "install metamask";
+      const acounts = await window.ethereum.request({
+        method: "eth_requestAccounts",
+      });
+      setCurrentUser(accounts[0]);
+    } catch (e) {
+      console.log("went wrong");
+    }
+  };
+
+  useEffect(() => {
+    checkIfWalletConnected();
+  }, []);
+
   return (
-    <TrackingContext.Provider value={{ fetchContract }}>
+    <TrackingContext.Provider
+      value={{
+        connectWallet,
+        createShipment,
+        getAllShipment,
+        completeShipment,
+        getShipment,
+        startShipment,
+        getShipmentCount,
+        dappName,
+        currentUser,
+      }}
+    >
       {children}
     </TrackingContext.Provider>
   );
