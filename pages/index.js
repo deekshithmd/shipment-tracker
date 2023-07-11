@@ -39,7 +39,46 @@ const index = () => {
     };
   });
 
-  return <div>Hello</div>;
+  return (
+    <>
+      <Services
+        setOpenProfile={setOpenProfile}
+        setCompleteModa={setCompleteModal}
+        setGetModal={setGetModal}
+        setStartModal={setStartModal}
+      />
+      <Table
+        setCreateShipmentModal={setCreateShipmentModal}
+        allShipmentData={allShipmentData}
+      />
+      <Form
+        createShipmentModal={createShipmentModal}
+        createShipment={createShipment}
+        setCreateShipmentModal={setCreateShipmentModal}
+      />
+      <Profile
+        openProfile={openProfile}
+        setOpenProfile={setOpenProfile}
+        currentUser={currentUser}
+        getShipmentCount={getShipmentCount}
+      />
+      <CompleteShipment
+        completeModal={completeModal}
+        setCompleteModal={setCompleteModal}
+        completeShipment={completeShipment}
+      />
+      <GetShipment
+        getModal={getModal}
+        setGetModal={setGetModal}
+        getShipment={getShipment}
+      />
+      <StartShipment
+        startModal={startModal}
+        setStartModal={setStartModal}
+        startShipment={startShipment}
+      />
+    </>
+  );
 };
 
 export default index;
