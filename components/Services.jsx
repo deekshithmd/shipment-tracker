@@ -19,6 +19,9 @@ const Services = ({
       avatar: images.startShipment,
     },
     {
+      avatar: images.userProfile,
+    },
+    {
       avatar: images.shipCount,
     },
     {
@@ -47,7 +50,7 @@ const Services = ({
                 <li key={idx}>
                   <div
                     className="w-full h-60 sm:h-52 md:h-56"
-                    onClick={() => openModalBox(i + 1)}
+                    onClick={() => openModalBox(idx + 1)}
                   >
                     <Image
                       src={item.avatar}

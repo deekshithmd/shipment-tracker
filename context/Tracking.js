@@ -7,7 +7,7 @@ const ContractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 const ContractABI = tracking.abi;
 
 const fetchContract = (signerOrProvider) => {
-  new ethers.Contract(ContractAddress, ContractABI, signerOrProvider);
+  return new ethers.Contract(ContractAddress, ContractABI, signerOrProvider);
 };
 
 const TrackingContext = createContext();
@@ -70,7 +70,7 @@ const TrackingContextProvider = ({ children }) => {
       const provider = new ethers.JsonRpcProvider();
       const contract = fetchContract(provider);
       const shipmentCount = await contract.getShipmentCount(accounts[0]);
-      return shipmentCount.toNumber();
+      return shipmentCount.toNumber;
     } catch (e) {
       console.log(e);
     }
@@ -177,7 +177,7 @@ const TrackingContextProvider = ({ children }) => {
   const connectWallet = async () => {
     try {
       if (!window.ethereum) return "install metamask";
-      const acounts = await window.ethereum.request({
+      const accounts = await window.ethereum.request({
         method: "eth_requestAccounts",
       });
       setCurrentUser(accounts[0]);

@@ -43,7 +43,7 @@ const index = () => {
     <>
       <Services
         setOpenProfile={setOpenProfile}
-        setCompleteModa={setCompleteModal}
+        setCompleteModal={setCompleteModal}
         setGetModal={setGetModal}
         setStartModal={setStartModal}
       />
