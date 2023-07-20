@@ -15,13 +15,14 @@ const TrackingContext = createContext();
 const TrackingContextProvider = ({ children }) => {
   const dappName = "Shipment Tracker";
   const [currentUser, setCurrentUser] = useState("");
+
   const createShipment = async (items) => {
     const { receiver, pickupTime, distance, price } = items;
     try {
       const web3Modal = new Web3Modal();
       const connection = await web3Modal.connect();
       const provider = new ethers.BrowserProvider(connection);
-      const signer = provider.getSigner();
+      const signer = await provider.getSigner();
       const contract = fetchContract(signer);
       const createItem = await contract.createShipment(
         receiver,

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Str1 } from "./SVG/Str1";
+import { Str1 } from ".";
 
 const StartShipment = ({ startModal, setStartModal, startShipment }) => {
   const [getProduct, setGetProduct] = useState({

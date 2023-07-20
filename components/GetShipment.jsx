@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Str1 } from "./SVG/Str1";
+import { Str1 } from ".";
 
 const GetShipment = ({ getModal, setGetModal, getShipment }) => {
   const [index, setIndex] = useState(0);
