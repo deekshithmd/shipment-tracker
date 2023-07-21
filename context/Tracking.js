@@ -26,7 +26,7 @@ const TrackingContextProvider = ({ children }) => {
       const contract = fetchContract(signer);
       const createItem = await contract.createShipment(
         receiver,
-        new Date(pickupTime).getTime,
+        new Date(pickupTime).getTime(),
         distance,
         ethers.parseUnits(price, 18),
         {
@@ -36,24 +36,27 @@ const TrackingContextProvider = ({ children }) => {
       await createItem.wait();
       console.log("createdITem", createItem);
     } catch (e) {
-      console.log(e);
+      console.log("error while creating", e);
     }
   };
 
   const getAllShipment = async () => {
     try {
       const provider = new ethers.JsonRpcProvider();
+      console.log("got provider")
       const contract = fetchContract(provider);
+      console.log("got contract")
       const shipments = await contract.getAllTransactions();
+      console.log("got shipments",shipments)
       const allShipments = shipments.map((shipment) => ({
-        sender: shipment.sender,
-        receiver: shipment.receiver,
-        price: ethers.formatEther(shipment.price.toString()),
-        pickupTime: shipment.pickupTime.toNumber(),
-        deliveryTime: shipment.deliveryTime.toNumber(),
-        distance: shipment.distance.toNumber(),
-        isPaid: shipment.isPaid,
-        status: shipment.status,
+        sender: shipment?.sender,
+        receiver: shipment?.receiver,
+        price: ethers.formatEther(shipment?.price?.toString()),
+        pickupTime: shipment?.pickupTime?.toNumber(),
+        deliveryTime: shipment?.deliveryTime?.toNumber(),
+        distance: shipment?.distance?.toNumber(),
+        isPaid: shipment?.isPaid,
+        status: shipment?.status,
       }));
       return allShipments;
     } catch (e) {
@@ -121,10 +124,10 @@ const TrackingContextProvider = ({ children }) => {
       const SingleShipment = {
         sender: shipment[0],
         receiver: shipment[1],
-        pickupTime: shipment[2].toNumber(),
-        deliveryTime: shipment[3].toNumber(),
-        distance: shipment[4].toNumber(),
-        price: ethers.formatEther(shipment[5], toString()),
+        pickupTime: shipment[2]?.toNumber(),
+        deliveryTime: shipment[3]?.toNumber(),
+        distance: shipment[4]?.toNumber(),
+        price: ethers.formatEther(shipment[5]?.toString()),
         status: shipment[6],
         isPaid: shipment[7],
       };
