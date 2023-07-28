@@ -31,10 +31,14 @@ const index = () => {
   const [allShipmentData, setAllShipmentData] = useState();
 
   useEffect(() => {
-    const getCampaignsData = getAllShipment();
+    // (async () => {
+      const getCampaignsData = getAllShipment();
+    //   setAllShipmentData(getCampaignsData);
+    // })();
 
     return async () => {
       const allData = await getCampaignsData;
+      // console.log("Campaign", allData);
       setAllShipmentData(allData);
     };
   });

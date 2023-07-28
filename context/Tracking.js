@@ -43,24 +43,24 @@ const TrackingContextProvider = ({ children }) => {
   const getAllShipment = async () => {
     try {
       const provider = new ethers.JsonRpcProvider();
-      console.log("got provider")
       const contract = fetchContract(provider);
-      console.log("got contract")
-      const shipments = await contract.getAllTransactions();
-      console.log("got shipments",shipments)
-      const allShipments = shipments.map((shipment) => ({
-        sender: shipment?.sender,
-        receiver: shipment?.receiver,
-        price: ethers.formatEther(shipment?.price?.toString()),
-        pickupTime: shipment?.pickupTime?.toNumber(),
-        deliveryTime: shipment?.deliveryTime?.toNumber(),
-        distance: shipment?.distance?.toNumber(),
-        isPaid: shipment?.isPaid,
-        status: shipment?.status,
-      }));
+      const shipments = await contract.getAllTransactions(); 
+      const allShipments = shipments.map((shipment) => {
+        return {
+          sender: shipment?.sender,
+          receiver: shipment?.received,
+          price: ethers.formatEther(shipment?.prive),
+          pickupTime: Number(shipment?.pickupTime),
+          deliveryTime: Number(shipment?.deliveryTime),
+          distance: Number(shipment?.distance),
+          isPaid: shipment?.isPaid,
+          status: shipment?.status,
+        };
+      });
+      // console.log("AllShipments", allShipments);
       return allShipments;
     } catch (e) {
-      console.log(e);
+      console.log("error in allshipments", e);
     }
   };
 
@@ -74,7 +74,7 @@ const TrackingContextProvider = ({ children }) => {
       const provider = new ethers.JsonRpcProvider();
       const contract = fetchContract(provider);
       const shipmentCount = await contract.getShipmentCount(accounts[0]);
-      return shipmentCount.toNumber;
+      return Number(shipmentCount);
     } catch (e) {
       console.log(e);
     }
@@ -124,9 +124,9 @@ const TrackingContextProvider = ({ children }) => {
       const SingleShipment = {
         sender: shipment[0],
         receiver: shipment[1],
-        pickupTime: shipment[2]?.toNumber(),
-        deliveryTime: shipment[3]?.toNumber(),
-        distance: shipment[4]?.toNumber(),
+        pickupTime: Number(shipment[2]),
+        deliveryTime: Number(shipment[3]),
+        distance: Number(shipment[4]),
         price: ethers.formatEther(shipment[5]?.toString()),
         status: shipment[6],
         isPaid: shipment[7],
@@ -151,6 +151,7 @@ const TrackingContextProvider = ({ children }) => {
       const provider = new ethers.BrowserProvider(connection);
       const signer = provider.getSigner();
       const contract = fetchContract(signer);
+      console.log("contract",index * 1)
       const shipment = await contract.startShipment(
         accounts[0],
         receiver,

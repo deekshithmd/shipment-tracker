@@ -1,6 +1,6 @@
 import React from "react";
 
-const Table = ({ setCreateShipmentModal, allShipmentsData }) => {
+const Table = ({ setCreateShipmentModal, allShipmentData }) => {
   const convertTime = (time) => {
     const newTime = new Date(time);
     const dataTime = new Intl.DateTimeFormat("en-US", {
@@ -47,7 +47,7 @@ const Table = ({ setCreateShipmentModal, allShipmentsData }) => {
             </tr>
           </thead>
           <tbody className="text-gray-600 divide-y">
-            {allShipmentsData?.map((shipment, idx) => {
+            {allShipmentData?.map((shipment, idx) => {
               return (
                 <tr key={idx}>
                   <td className="px-6 py-4 whitespace-nowrap">
