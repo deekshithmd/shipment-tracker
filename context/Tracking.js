@@ -34,7 +34,6 @@ const TrackingContextProvider = ({ children }) => {
         }
       );
       await createItem.wait();
-      console.log("createdITem", createItem);
     } catch (e) {
       console.log("error while creating", e);
     }
@@ -57,7 +56,6 @@ const TrackingContextProvider = ({ children }) => {
           status: shipment?.status,
         };
       });
-      // console.log("AllShipments", allShipments);
       return allShipments;
     } catch (e) {
       console.log("error in allshipments", e);
@@ -69,7 +67,7 @@ const TrackingContextProvider = ({ children }) => {
       if (!window.ethereum) return "install metamask";
 
       const accounts = await window.ethereum.request({
-        method: "eth_accounts",
+        method: "eth_requestAccounts",
       });
       const provider = new ethers.JsonRpcProvider();
       const contract = fetchContract(provider);
@@ -91,7 +89,7 @@ const TrackingContextProvider = ({ children }) => {
       const web3Modal = new Web3Modal();
       const connection = await web3Modal.connect();
       const provider = new ethers.BrowserProvider(connection);
-      const signer = provider.getSigner();
+      const signer = await provider.getSigner();
       const contract = fetchContract(signer);
 
       const transaction = await contract.completeShipment(
@@ -149,9 +147,8 @@ const TrackingContextProvider = ({ children }) => {
       const web3Modal = new Web3Modal();
       const connection = await web3Modal.connect();
       const provider = new ethers.BrowserProvider(connection);
-      const signer = provider.getSigner();
+      const signer = await provider.getSigner();
       const contract = fetchContract(signer);
-      console.log("contract",index * 1)
       const shipment = await contract.startShipment(
         accounts[0],
         receiver,

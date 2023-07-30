@@ -41,7 +41,7 @@ const index = () => {
       // console.log("Campaign", allData);
       setAllShipmentData(allData);
     };
-  });
+  },[]);
 
   return (
     <>
