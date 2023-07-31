@@ -36,14 +36,14 @@ const Table = ({ setCreateShipmentModal, allShipmentData }) => {
         <table className="w-full table-auto text-sm text-left">
           <thead className="bg-gray-50 text-gray-600 font-medium border-b">
             <tr>
-              <th className="py-3px-6">Sender</th>
-              <th className="py-3px-6">Receiver</th>
-              <th className="py-3px-6">PickupTime</th>
-              <th className="py-3px-6">Distance</th>
-              <th className="py-3px-6">Price</th>
-              <th className="py-3px-6">Delivery Time</th>
-              <th className="py-3px-6">Paid</th>
-              <th className="py-3px-6">Status</th>
+              <th className="py-3 px-6">Sender</th>
+              <th className="py-3 px-6">Receiver</th>
+              <th className="py-3 px-6">PickupTime</th>
+              <th className="py-3 px-6">Distance</th>
+              <th className="py-3 px-6">Price</th>
+              <th className="py-3 px-6">Delivery Time</th>
+              <th className="py-3 px-6">Paid</th>
+              <th className="py-3 px-6">Status</th>
             </tr>
           </thead>
           <tbody className="text-gray-600 divide-y">

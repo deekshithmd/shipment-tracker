@@ -156,6 +156,10 @@ contract Tracking {
         emit ShipmentPaid(_sender, _receiver, amount);
     }
 
+    function getShipment(address _sender, uint256 index) public view returns (Shipment memory){
+        return shipments[_sender][index];
+    }
+
     function getShipmentCount(address _sender) public view returns (uint256) {
         return shipments[_sender].length;
     }
